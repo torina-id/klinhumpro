@@ -379,6 +379,24 @@
 				}
 			}
          });
+
+         jQuery("#blog-carousel-4").owlCarousel({
+            center: true,
+			items:5,
+			loop:true,
+			margin:20,
+			responsive:{
+				1000:{
+					items:3
+				},
+				600:{
+					items:2
+				},
+				0:{
+					items:1
+				}
+			}
+         });
 		 
 		 jQuery("#owl-logo").owlCarousel({
             center: false,
