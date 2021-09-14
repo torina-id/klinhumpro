@@ -6,6 +6,7 @@
         }
 
         public function index($page = 'home'){
+
             $this->load->view('@/_a');
             $this->load->view('@/_b');
             $this->load->view('@/_c');
@@ -21,6 +22,7 @@
             if(empty($data['detail'])){
                 show_404();
             }
+
             $data['judul']= "DETIL KEGIATAN"; 
             $this->load->view('@/_a');
             $this->load->view('@/_b');

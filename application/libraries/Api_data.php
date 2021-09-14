@@ -9,10 +9,10 @@ class Api_data {
 
     public function giat($row){
 
-        $data = $this->get_api(DASH_URL."rows/".$row,"","","GET");
-        if($data["content"]!="")
+        $data = file_get_contents(DASH_URL."rows/".$row);
+        if($data!="")
             {
-                $arr= $data["content"]; 
+                $arr= $data; 
                 $json = json_decode($arr,true);
                 return $json;
             }
@@ -20,10 +20,11 @@ class Api_data {
 
     public function debes(){
 
-        $data = $this->get_api(GLAM_URL."banner/api","","","GET");
-        if($data["content"]!="")
+        $data = file_get_contents(GLAM_URL.'banner/api');
+
+        if($data!="")
             {
-                $arr= $data["content"]; 
+                $arr= $data; 
                 $json = json_decode($arr,true);
                 return $json;
             }
@@ -31,67 +32,25 @@ class Api_data {
 
     public function lidi(){
 
-        $data = $this->get_api(GLAM_URL."library/api","","","GET");
-        if($data["content"]!="")
+        $data = file_get_contents(GLAM_URL.'library/api');
+
+        if($data!="")
             {
-                $arr= $data["content"]; 
+                $arr= $data; 
                 $json = json_decode($arr,true);
                 return $json;
             }
     }    
 
     public function giatById($id){
-        $data = $this->get_api(DASH_URL."id_kegiatan/".$id,"","","GET");
+        $data = file_get_contents(DASH_URL."id_kegiatan/".$id);
         // print_r($data["content"]);
-        if($data["content"]!="")
+        if($data!="")
             {
-                $arr= $data["content"]; 
+                $arr= $data; 
                 $json = json_decode($arr,true);
                 return $json;
             }
-    }
-
-
-    private function get_api($url,$post="",$token="",$method="POST")
-    {
-                $options = array(
-                    CURLOPT_CUSTOMREQUEST => $method,
-                    CURLOPT_POSTFIELDS => $post,
-                    CURLOPT_RETURNTRANSFER => true,     // return web page
-                    CURLOPT_HEADER         => false,    // don't return headers
-                    CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-                    CURLOPT_ENCODING       => "",       // handle all encodings
-                    CURLOPT_USERAGENT      => "spider", // who am i
-                    CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-                    CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-                    CURLOPT_TIMEOUT        => 120,      // timeout on response
-                    CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
-                    CURLOPT_SSL_VERIFYPEER => false,  // Disabled SSL Cert checks
-                    CURLOPT_SSL_VERIFYHOST => false
-                );
-
-                
-                
-                if($token!="")
-                {
-                
-                    $options[CURLOPT_HTTPHEADER]=array("Authorization: ".$token);
-                }
-                
-
-                $ch      = curl_init( $url );
-                curl_setopt_array( $ch, $options );
-                $content = curl_exec( $ch );
-                $err     = curl_errno( $ch );
-                $errmsg  = curl_error( $ch );
-                $header  = curl_getinfo( $ch );
-                curl_close( $ch );
-
-                $header['errno']   = $err;
-                $header['errmsg']  = $errmsg;
-                $header['content'] = $content;
-
-                return $header;
     }
 
     public function bulan($bln)
